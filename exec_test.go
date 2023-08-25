@@ -24,3 +24,19 @@ func Test(t *testing.T) {
 	}
 	t.Log("listing:", strings.ReplaceAll(output, "\n", ", "))
 }
+func TestMust(t *testing.T) {
+	defer func() {
+		r := recover()
+		if r == nil {
+			t.Error("Should have panicked...")
+		}
+	}()
+	_ = exec.MustRun("not-a-chance-in-the-world")
+}
+func TestJust(t *testing.T) {
+	output := exec.JustRun("not-a-chance-in-the-world")
+	t.Log(output)
+	if !strings.Contains(output, "not found") {
+		t.Error("Expected some sort of not-found error from the shell. Output:", output)
+	}
+}

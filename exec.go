@@ -37,3 +37,14 @@ func Run(program string, options ...option) (output string, err error) {
 	err = command.Run()
 	return strings.TrimSpace(buffer.String()), err
 }
+func MustRun(program string, options ...option) string {
+	output, err := Run(program, options...)
+	if err != nil {
+		panic(err)
+	}
+	return output
+}
+func JustRun(program string, options ...option) string {
+	output, _ := Run(program, options...)
+	return output
+}
