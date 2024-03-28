@@ -40,3 +40,13 @@ func TestJust(t *testing.T) {
 		t.Error("Expected some sort of not-found error from the shell. Output:", output)
 	}
 }
+func TestIn(t *testing.T) {
+	output, err := exec.Run("grep 'ello'", exec.Options.In(bytes.NewBufferString("Hello, world!")))
+	t.Log(output)
+	if output != "Hello, world!" {
+		t.Error("missing expected match")
+	}
+	if err != nil {
+		t.Error(err)
+	}
+}
