@@ -3,6 +3,7 @@ package exec
 import (
 	"bytes"
 	"io"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -40,6 +41,7 @@ func Run(program string, options ...option) (output string, err error) {
 	command := exec.Command("bash", "-c", program)
 	command.Stdout = buffer
 	command.Stderr = buffer
+	command.Env = os.Environ()
 	for _, option := range options {
 		option(command)
 	}
