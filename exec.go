@@ -18,17 +18,20 @@ func (opt) At(dir string) option {
 		command.Dir = dir
 	}
 }
-
 func (opt) In(reader io.Reader) option {
 	return func(command *exec.Cmd) {
 		command.Stdin = reader
 	}
 }
-
 func (opt) Out(writers ...io.Writer) option {
 	return func(command *exec.Cmd) {
 		command.Stdout = io.MultiWriter(append(writers, command.Stdout)...)
 		command.Stderr = command.Stdout
+	}
+}
+func (opt) Env(key, value string) option {
+	return func(command *exec.Cmd) {
+		command.Env = append(command.Env, key+"="+value)
 	}
 }
 
