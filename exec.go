@@ -2,6 +2,7 @@ package exec
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -51,7 +52,7 @@ func Run(program string, options ...option) (output string, err error) {
 func MustRun(program string, options ...option) string {
 	output, err := Run(program, options...)
 	if err != nil {
-		panic(err)
+		panic(fmt.Sprintln(err, output))
 	}
 	return output
 }
